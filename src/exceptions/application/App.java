@@ -33,6 +33,24 @@ public class App {
 			System.out.println("Erro data de saida e menor que data de entrada");
 		}
 		
+		System.out.println("--------Atualização de estadia do cliente--------");
+		
+		System.out.print("Digite a nova data de entrada: ");
+		Date newCheckin = sdf.parse(sc.next());
+		
+		System.out.print("Digite a nova data de saída: ");
+		Date newCheckout = sdf.parse(sc.next());
+		
+		System.out.println("--------Dados atualizados--------");
+		
+		if(newCheckout.after(newCheckin)) {
+			 rev.updateDates(newCheckin, newCheckout);
+			 System.out.println(rev);
+		}
+		else {
+			System.out.println("Erro data de saida e menor que data de entrada");
+		}
+	
 		sc.close();	
 	}
 
