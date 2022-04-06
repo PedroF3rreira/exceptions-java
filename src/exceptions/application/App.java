@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import exceptions.model.entities.Reservation;
+import exceptions.model.exceptions.DomainExceptions;
 
 public class App {
 
@@ -24,33 +25,29 @@ public class App {
 		Date checkout = sdf.parse(sc.next());
 		
 		Reservation rev = null;
-		
-		if(checkout.after(checkin)) {
-			 rev = new Reservation(roomNumber, checkin, checkout);
-			 System.out.println(rev);
+		try {
+			
+			rev = new Reservation(roomNumber, checkin, checkout);
+			System.out.println(rev);
+			
+			System.out.println("--------Atualização de estadia do cliente--------");
+			
+			System.out.print("Digite a nova data de entrada: ");
+			Date newCheckin = sdf.parse(sc.next());
+			
+			System.out.print("Digite a nova data de saída: ");
+			Date newCheckout = sdf.parse(sc.next());
+			
+			System.out.println("--------Dados atualizados--------");
+			
+			rev.updateDates(newCheckin, newCheckout);
+			System.out.println(rev);
 		}
-		else {
-			System.out.println("Erro data de saida e menor que data de entrada");
+		catch(DomainExceptions e) {
+			System.out.println(e.getMessage());
 		}
+
 		
-		System.out.println("--------Atualização de estadia do cliente--------");
-		
-		System.out.print("Digite a nova data de entrada: ");
-		Date newCheckin = sdf.parse(sc.next());
-		
-		System.out.print("Digite a nova data de saída: ");
-		Date newCheckout = sdf.parse(sc.next());
-		
-		System.out.println("--------Dados atualizados--------");
-		
-		if(newCheckout.after(newCheckin)) {
-			 rev.updateDates(newCheckin, newCheckout);
-			 System.out.println(rev);
-		}
-		else {
-			System.out.println("Erro data de saida e menor que data de entrada");
-		}
-	
 		sc.close();	
 	}
 
